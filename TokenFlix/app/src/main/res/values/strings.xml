@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TokenFlix</string>
+    <string name="poster_image">Imagem do Poster</string>
+    <string name="average_vote_txt">MÉDIA GERAL |</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/filmListFragment">
+
+    <fragment
+        android:id="@+id/filmListFragment"
+        android:name="com.duv.tokenflix.view.list.FilmListFragment"
+        android:label="PokeListFragment"
+        tools:layout="@layout/fragment_film_list">
+
+        <action
+            android:id="@+id/action_fragmentFilmList_to_fragmentFilmDetail"
+            app:destination="@id/filmDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/filmDetailFragment"
+        android:name="com.duv.tokenflix.view.detail.FilmDetailFragment"
+        android:label="PokeDetailFragment"
+        tools:layout="@layout/fragment_film_detail">
+
+        <action
+            android:id="@+id/action_fragmentPokeDetail_to_fragmentPokeList"
+            app:destination="@id/filmListFragment"/>
+
+    </fragment>
+
+</navigation>
