@@ -1,22 +1,26 @@
 package com.duv.tokenflix.view.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.duv.tokenflix.FILM_ID
+import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.R
 import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
+import com.duv.tokenflix.view.list.FilmListPresenter
 import kotlinx.android.synthetic.main.fragment_film_detail.*
 import kotlinx.android.synthetic.main.fragment_film_detail.pb_loading
-import kotlinx.android.synthetic.main.fragment_film_list.*
+
 
 class FilmDetailFragment: Fragment(), FilmDetailView {
 
-    private val presenter = FilmDetailPresenter(this, FilmRepository() )
+    lateinit var presenter: FilmDetailPresenter
     private var filmId: Int = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,10 +33,17 @@ class FilmDetailFragment: Fragment(), FilmDetailView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = FilmDetailPresenter(this, FilmRepository(), context)
+
         arguments?.let {
             filmId = it.getInt(FILM_ID)
         }
-        presenter.getFilm(filmId)
+
+        //if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
+            presenter.getFilm(filmId)
+       // } else {
+       //     presenter.getSharedPreferFilm()
+       // }
     }
 
     override fun initFilm(film: FilmListModel) {
@@ -42,8 +53,8 @@ class FilmDetailFragment: Fragment(), FilmDetailView {
         tv_title.text = film.title
         film.genres.let {
             var filmGenres = ""
-            for ( film in it){
-                filmGenres += "$film "
+            for ( films in it){
+                filmGenres += "$films "
             }
             tv_genres.text = filmGenres
         }

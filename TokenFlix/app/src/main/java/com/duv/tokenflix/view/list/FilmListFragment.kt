@@ -1,6 +1,8 @@
 package com.duv.tokenflix.view.list
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.duv.tokenflix.FILM_ID
+import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.R
 import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
@@ -18,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_film_list.*
 
 class FilmListFragment: Fragment(), FilmListView {
 
-    private val presenter: FilmListPresenter = FilmListPresenter(this, FilmRepository())
+    lateinit var presenter: FilmListPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +34,13 @@ class FilmListFragment: Fragment(), FilmListView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.getFilmList()
+        presenter = FilmListPresenter(this, FilmRepository(), context)
+
+        if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
+            presenter.getFilmList()
+        }else {
+            presenter.getSharedPreferFilm()
+        }
     }
 
     override fun initFilmList(list: List<FilmListModel>) {
@@ -40,6 +49,7 @@ class FilmListFragment: Fragment(), FilmListView {
         rv_list.adapter = adapter
         pb_loading.visibility = View.INVISIBLE
     }
+
 
     override fun onClickListener(id: Int) {
         findNavController().navigate(R.id.action_fragmentFilmList_to_fragmentFilmDetail, Bundle().apply {

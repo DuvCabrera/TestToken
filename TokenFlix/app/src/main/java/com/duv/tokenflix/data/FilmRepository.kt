@@ -31,4 +31,8 @@ class FilmRepository {
         val call = service.getFilm(id)
         call.enqueue(callback)
     }
+
+    fun getFilmFromPreferences(id: Int) {
+
+    }
 }
