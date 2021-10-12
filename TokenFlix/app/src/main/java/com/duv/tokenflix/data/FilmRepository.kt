@@ -2,7 +2,6 @@ package com.duv.tokenflix.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.model.FilmListModel
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -37,10 +36,6 @@ class FilmRepository {
 
     fun getSharedPreferFilm(context: Context?, key: String) : SharedPreferences?{
         return context?.getSharedPreferences(key, Context.MODE_PRIVATE)
-
-    }
-
-    fun getFilmFromPreferences(id: Int) {
 
     }
 }

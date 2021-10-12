@@ -11,7 +11,6 @@ import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.R
 import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
-import com.duv.tokenflix.view.list.FilmListPresenter
 import kotlinx.android.synthetic.main.fragment_film_detail.*
 import kotlinx.android.synthetic.main.fragment_film_detail.pb_loading
 

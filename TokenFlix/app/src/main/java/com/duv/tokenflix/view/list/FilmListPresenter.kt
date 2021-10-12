@@ -1,7 +1,6 @@
 package com.duv.tokenflix.view.list
 
 import android.content.Context
-import android.util.Log
 import android.widget.ImageView
 import com.duv.tokenflix.BASE_URL
 import com.duv.tokenflix.FILM_PREFER
@@ -66,7 +65,6 @@ class FilmListPresenter (
     fun getSharedFilmList(){
         val jsonString = context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null)
         val filmList = filmJsonConverter(jsonString)
-        Log.e("RESPOSTA GSON", filmList.toString())
         view.initFilmList(filmList)
     }
 }
