@@ -16,6 +16,7 @@ import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
 import com.duv.tokenflix.view.list.adapter.FilmListAdapter
 import kotlinx.android.synthetic.main.fragment_film_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class FilmListFragment: Fragment(), FilmListView {
 
@@ -33,6 +34,7 @@ class FilmListFragment: Fragment(), FilmListView {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = FilmListPresenter(this, FilmRepository(), context)
+        txt_ScreenName.text = "TokenMDB"
 
         if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
             presenter.getFilmListFromAPI()
@@ -43,7 +45,7 @@ class FilmListFragment: Fragment(), FilmListView {
 
     override fun initFilmList(list: List<FilmListModel>) {
         val adapter = FilmListAdapter(list, this, presenter)
-        rv_list.layoutManager= GridLayoutManager(context,2)
+        rv_list.layoutManager= GridLayoutManager(context,3)
         rv_list.adapter = adapter
         pb_loading.visibility = View.INVISIBLE
     }
@@ -58,5 +60,4 @@ class FilmListFragment: Fragment(), FilmListView {
     override fun showError() {
         Toast.makeText(context, "Ops, ocorreu algum erro.", Toast.LENGTH_SHORT).show()
     }
-
 }

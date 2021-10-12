@@ -13,6 +13,7 @@ import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
 import kotlinx.android.synthetic.main.fragment_film_detail.*
 import kotlinx.android.synthetic.main.fragment_film_detail.pb_loading
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class FilmDetailFragment: Fragment(), FilmDetailView {
@@ -38,6 +39,10 @@ class FilmDetailFragment: Fragment(), FilmDetailView {
             filmId = it.getInt(FILM_ID)
         }
 
+        btn_return.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
         if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
             presenter.getFilm(filmId)
         } else {
@@ -47,15 +52,18 @@ class FilmDetailFragment: Fragment(), FilmDetailView {
 
     override fun initFilm(film: FilmListModel) {
         presenter.getPoster(film.poster_url, iv_poster)
+
+        rb_average_vote.rating = film.vote_average/2
+
         tv_average_vote.text = film.vote_average.toString()
         tv_release_date.text = film.release_date
         tv_title.text = film.title
         film.genres.let {
             var filmGenres = ""
-            for ( films in it){
-                filmGenres += "$films "
+            for ( genres in it){
+                filmGenres = "$genres |"
             }
-            tv_genres.text = filmGenres
+            tv_genres.text = "Gêneros: | $filmGenres"
         }
         pb_loading.visibility = View.INVISIBLE
     }
