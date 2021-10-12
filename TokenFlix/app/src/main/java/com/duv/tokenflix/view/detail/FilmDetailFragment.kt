@@ -39,11 +39,11 @@ class FilmDetailFragment: Fragment(), FilmDetailView {
             filmId = it.getInt(FILM_ID)
         }
 
-        //if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
+        if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
             presenter.getFilm(filmId)
-       // } else {
-       //     presenter.getSharedPreferFilm()
-       // }
+        } else {
+            presenter.getSharedFilm(filmId)
+        }
     }
 
     override fun initFilm(film: FilmListModel) {

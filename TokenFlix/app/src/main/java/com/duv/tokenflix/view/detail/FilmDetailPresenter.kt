@@ -8,6 +8,7 @@ import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,22 +44,18 @@ class FilmDetailPresenter(
         Picasso.get().load(url).into(view)
     }
 
-    fun saveSharedPreferences(json: FilmListModel ){
-        val gson = Gson()
-        val jsonString = gson.toJson(json)
-        val sharedPref = context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)
-        val editor = sharedPref?.edit()
-
-        editor?.apply {
-            putString("films", jsonString)
-            apply()
-        }
+    private fun filmJsonConverter(json:String?) :List<FilmListModel>{
+        val type = object: TypeToken<List<FilmListModel>>(){ }.type
+        return Gson().fromJson(json, type)
     }
 
-    fun getSharedPreferFilm(){
-        val jsonString = context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null)
-        val gson = Gson()
-        val film =
-        view.initFilm(film)
+    fun getSharedFilm(id: Int){
+        val jsonString = filmRepository.getSharedPreferFilm(context, FILM_PREFER)?.getString("films", null)
+        val filmList = filmJsonConverter(jsonString)
+        for (film in filmList){
+            if (film.id == id ){
+                view.initFilm(film)
+            }
+        }
     }
 }

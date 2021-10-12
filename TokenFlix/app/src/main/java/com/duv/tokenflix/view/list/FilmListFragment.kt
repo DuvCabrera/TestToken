@@ -2,7 +2,6 @@ package com.duv.tokenflix.view.list
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.duv.tokenflix.FILM_ID
 import com.duv.tokenflix.FILM_PREFER
 import com.duv.tokenflix.R
@@ -37,9 +35,9 @@ class FilmListFragment: Fragment(), FilmListView {
         presenter = FilmListPresenter(this, FilmRepository(), context)
 
         if (context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null) == null) {
-            presenter.getFilmList()
+            presenter.getFilmListFromAPI()
         }else {
-            presenter.getSharedPreferFilm()
+            presenter.getSharedFilmList()
         }
     }
 

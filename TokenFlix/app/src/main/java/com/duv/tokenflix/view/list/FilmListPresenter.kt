@@ -39,7 +39,7 @@ class FilmListPresenter (
         }
     }
 
-    fun getFilmList(){
+    fun getFilmListFromAPI(){
         filmRepository.getApiList(BASE_URL, callback)
     }
 
@@ -48,9 +48,8 @@ class FilmListPresenter (
     }
 
     private fun saveSharedPreferences(json: List<FilmListModel> ){
-        val gson = Gson()
-        val jsonString = gson.toJson(json)
-        val sharedPref = context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)
+        val jsonString = Gson().toJson(json)
+        val sharedPref = filmRepository.getSharedPreferFilm(context, FILM_PREFER)
         val editor = sharedPref?.edit()
 
         editor?.apply {
@@ -59,14 +58,14 @@ class FilmListPresenter (
         }
     }
 
-    fun tranformaJson(json:String?) :List<FilmListModel>{
+    private fun filmJsonConverter(json:String?) :List<FilmListModel>{
         val type = object: TypeToken<List<FilmListModel>>(){ }.type
         return Gson().fromJson(json, type)
     }
 
-    fun getSharedPreferFilm(){
+    fun getSharedFilmList(){
         val jsonString = context?.getSharedPreferences(FILM_PREFER, Context.MODE_PRIVATE)?.getString("films", null)
-        val filmList = tranformaJson(jsonString)
+        val filmList = filmJsonConverter(jsonString)
         Log.e("RESPOSTA GSON", filmList.toString())
         view.initFilmList(filmList)
     }
