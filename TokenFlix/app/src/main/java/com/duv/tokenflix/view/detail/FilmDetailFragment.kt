@@ -13,7 +13,6 @@ import com.duv.tokenflix.data.FilmRepository
 import com.duv.tokenflix.model.FilmListModel
 import kotlinx.android.synthetic.main.fragment_film_detail.*
 import kotlinx.android.synthetic.main.fragment_film_detail.pb_loading
-import kotlinx.android.synthetic.main.toolbar.*
 
 
 class FilmDetailFragment: Fragment(), FilmDetailView {
